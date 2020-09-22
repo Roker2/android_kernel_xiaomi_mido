@@ -1127,6 +1127,8 @@ bool snd_usb_get_sample_rate_quirk(struct snd_usb_audio *chip)
 	case USB_ID(0x045E, 0x076F): /* MS Lifecam HD-6000 */
 	case USB_ID(0x045E, 0x0772): /* MS Lifecam Studio */
 	case USB_ID(0x045E, 0x0779): /* MS Lifecam HD-3000 */
+	case USB_ID(0x047F, 0x02F7): /* Plantronics BT-600 */
+	case USB_ID(0x047F, 0x0415): /* Plantronics BT-300 */
 	case USB_ID(0x047F, 0xAA05): /* Plantronics DA45 */
 	case USB_ID(0x04D8, 0xFEEA): /* Benchmark DAC1 Pre */
 	case USB_ID(0x0556, 0x0014): /* Phoenix Audio TMX320VC */
@@ -1151,6 +1153,7 @@ bool snd_usb_get_sample_rate_quirk(struct snd_usb_audio *chip)
 static bool is_marantz_denon_dac(unsigned int id)
 {
 	switch (id) {
+	case USB_ID(0x154e, 0x1002): /* Denon DCD-1500RE */
 	case USB_ID(0x154e, 0x1003): /* Denon DA-300USB */
 	case USB_ID(0x154e, 0x3005): /* Marantz HD-DAC1 */
 	case USB_ID(0x154e, 0x3006): /* Marantz SA-14S1 */

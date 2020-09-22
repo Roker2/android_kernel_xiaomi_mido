@@ -580,6 +580,11 @@ static ssize_t devkmsg_write(struct kiocb *iocb, struct iov_iter *from)
 		}
 	}
 
+	if (strncmp("healthd", line, 7) == 0) {
+	        kfree(buf);
+		return len;
+	}
+
 	printk_emit(facility, level, NULL, 0, "%s", line);
 	kfree(buf);
 	return ret;
@@ -1423,7 +1428,7 @@ static void call_console_drivers(int level, const char *text, size_t len)
 {
 	struct console *con;
 
-	trace_console(text, len);
+	trace_console_rcuidle(text, len);
 
 	if (level >= console_loglevel && !ignore_loglevel)
 		return;

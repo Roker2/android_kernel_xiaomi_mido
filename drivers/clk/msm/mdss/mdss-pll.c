@@ -20,6 +20,7 @@
 #include <linux/delay.h>
 #include <linux/iopoll.h>
 #include <linux/clk/msm-clock-generic.h>
+#include <linux/printk.h>
 
 #include "mdss-pll.h"
 #include "mdss-dsi-pll.h"
@@ -217,6 +218,14 @@ static int mdss_pll_clock_register(struct platform_device *pdev,
 
 	return rc;
 }
+
+static int __init mdss_pll_get_cfg(char *str)
+{
+	printk(str);
+	return 0;
+}
+
+__setup("anroid.display_panel=", mdss_pll_get_cfg);
 
 static int mdss_pll_probe(struct platform_device *pdev)
 {

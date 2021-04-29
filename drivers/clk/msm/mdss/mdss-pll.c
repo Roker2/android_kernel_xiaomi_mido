@@ -20,10 +20,13 @@
 #include <linux/delay.h>
 #include <linux/iopoll.h>
 #include <linux/clk/msm-clock-generic.h>
+#include <linux/printk.h>
 
 #include "mdss-pll.h"
 #include "mdss-dsi-pll.h"
 #include "mdss-hdmi-pll.h"
+
+static int is_tianma = 0; // Default 0 is not tianma
 
 int mdss_pll_resource_enable(struct mdss_pll_resources *pll_res, bool enable)
 {
@@ -210,6 +213,17 @@ static int mdss_pll_clock_register(struct platform_device *pdev,
 
 	return rc;
 }
+
+static int __init detect_tianma(char *str)
+{
+	printk(str);
+	if (strcmp("1:dsi:0:qcom,mdss_dsi_nt35596_tianma_fhd_video:1:none", str) == 0) {
+		is_tianma = 1; // It is tianma
+	}
+	return 0;
+}
+
+__setup("mdss_mdp.panel=", detect_tianma);
 
 static int mdss_pll_probe(struct platform_device *pdev)
 {

@@ -21,6 +21,7 @@
 #include <linux/iopoll.h>
 #include <linux/clk/msm-clock-generic.h>
 #include <linux/printk.h>
+#include <linux/proc_fs.h>
 
 #include "mdss-pll.h"
 #include "mdss-dsi-pll.h"
@@ -214,12 +215,16 @@ static int mdss_pll_clock_register(struct platform_device *pdev,
 	return rc;
 }
 
+static struct proc_dir_entry *tianma_dir;
+
 static int __init detect_tianma(char *str)
 {
-	printk(str);
 	if (strcmp("1:dsi:0:qcom,mdss_dsi_nt35596_tianma_fhd_video:1:none", str) == 0) {
 		is_tianma = 1; // It is tianma
-	}
+                tianma_dir = proc_mkdir("tianma1", NULL);
+	} else {
+                tianma_dir = proc_mkdir("tianma0", NULL);
+        }
 	return 0;
 }
 
@@ -234,6 +239,8 @@ static int mdss_pll_probe(struct platform_device *pdev)
 	struct resource *dynamic_pll_base_reg;
 	struct resource *gdsc_base_reg;
 	struct mdss_pll_resources *pll_res;
+
+	pr_err("is_tianma = %d\n", is_tianma);
 
 	if (!pdev->dev.of_node) {
 		pr_err("MDSS pll driver only supports device tree probe\n");

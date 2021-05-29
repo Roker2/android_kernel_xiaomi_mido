@@ -219,11 +219,13 @@ static struct proc_dir_entry *tianma_dir;
 
 static int __init detect_tianma(char *str)
 {
+        char *tianma_0 = "tianma0";
+        char *tianma_1 = "tianma1";
 	if (strcmp("1:dsi:0:qcom,mdss_dsi_nt35596_tianma_fhd_video:1:none", str) == 0) {
 		is_tianma = 1; // It is tianma
-                tianma_dir = proc_mkdir("tianma1", NULL);
+                tianma_dir = proc_mkdir(tianma_1, NULL);
 	} else {
-                tianma_dir = proc_mkdir("tianma0", NULL);
+                tianma_dir = proc_mkdir(tianma_0, NULL);
         }
 	return 0;
 }
